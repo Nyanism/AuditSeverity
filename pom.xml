@@ -10,9 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cognizant</groupId>
-	<artifactId>AuditManagementPortal</artifactId>
+	<artifactId>AuditSeverity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AuditManagementPortal</name>
+	<packaging>jar</packaging>
+	<name>AuditSeverity</name>
 	<description>Demo project for Spring Data JPA and Hibernate</description>
 	<properties>
 		<java.version>17</java.version>

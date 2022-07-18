@@ -1,10 +1,10 @@
-package com.cognizant.auditmanagementportal;
+package com.cognizant.auditseverity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuditManagementPortalApplicationTests {
+class AuditSeverityApplicationTests {
 
 	@Test
 	void contextLoads() {

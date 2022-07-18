@@ -16,6 +16,7 @@ import com.cognizant.auditseverity.services.AuditSeverityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,11 @@ public class AuditSeverityController {
 	@Autowired
 	private AuditBenchmarkFeign auditBenchmarkFeign;
 	// private RestTemplate restTemplate;
+	
+	@GetMapping("/servercheck")
+	public ResponseEntity<String> awsCheck(){
+		return ResponseEntity.ok("AuditSeverity microservice is running on this server");
+	}
 
 	@PostMapping("/ProjectExecutionStatus")
 	public ResponseEntity<AuditResponse> projectExecutionStatus(@RequestBody AuditRequest auditRequest)
