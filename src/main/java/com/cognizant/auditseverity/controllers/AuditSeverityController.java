@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class AuditSeverityController {
 
 	@Autowired
@@ -33,6 +36,8 @@ public class AuditSeverityController {
 	@PostMapping("/ProjectExecutionStatus")
 	public ResponseEntity<AuditResponse> projectExecutionStatus(@RequestBody AuditRequest auditRequest)
 			throws URISyntaxException {
+		
+		log.info("Request for project execution status received by AuditSeverity microservice");
 		
 		// Replaced with Feign below
 		// To replace string with actual AuditBenchmark URL
@@ -50,6 +55,7 @@ public class AuditSeverityController {
 				benchmarkNoAnswers = ab.getBenchmarkNoAnswers();
 			}
 		}
+		log.info("Number of benchmark no answers retrieved from AuditBenchmark microservice");
 		
 		// (for internal testing)
 		// String auditType = "SOX";
@@ -59,6 +65,7 @@ public class AuditSeverityController {
 		int numberOfAuditQuestionsWithNo = auditRequest.getAuditDetail().getAuditQuestions().stream().filter(q -> {
 			return q.getResponse().equalsIgnoreCase("no"); 
 		}).collect(Collectors.toList()).size();
+		log.info("Number of no answers retrieved from AuditRequest");
 		
 		// (for internal testing)
 		// int numberOfAuditQuestionsWithNo = 2;
@@ -66,6 +73,7 @@ public class AuditSeverityController {
 		// Creates a new AuditResponse and compares the number of NO responses between the benchmark and the request
 		AuditResponse auditResponse = new AuditResponse();
 		auditResponse.setAuditRequest(auditRequest);
+		log.info("Comparing number of no answers from AuditRequest against the number of benchmark no answers");
 		if(auditType.equalsIgnoreCase("internal")) {
 			if(numberOfAuditQuestionsWithNo <= benchmarkNoAnswers) {
 				auditResponse.setProjectExecutionStatus("GREEN");
@@ -86,7 +94,9 @@ public class AuditSeverityController {
 		
 		// Saves the AuditResponse in the database
 		auditResponse = auditSeverityService.saveAuditResponse(auditResponse);
+		log.info("Saving AuditResponse to database");
 		
+		log.info("Request for project execution status completed");
 		return new ResponseEntity<AuditResponse>(auditResponse, HttpStatus.OK);
 	}
 

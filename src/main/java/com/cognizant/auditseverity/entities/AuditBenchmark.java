@@ -11,12 +11,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class AuditBenchmark {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
 	private String auditType;
 	private int benchmarkNoAnswers;
 	
