@@ -34,11 +34,25 @@ public class AuditSeverityController {
 	private AuditBenchmarkFeign auditBenchmarkFeign;
 	// private RestTemplate restTemplate;
 	
+	/**
+	 * Provides a REST endpoint to check if the microservice is running on its deployed server.
+	 * 
+	 * @return Returns a ResponseEntity with status code 200 and a small message
+	 */
 	@GetMapping("/servercheck")
 	public ResponseEntity<String> awsCheck(){
 		return ResponseEntity.ok("AuditSeverity microservice is running on this server");
 	}
-
+	
+	/**
+	 * Determines the status of the project based on the audit request and saves both the 
+	 * request and the response to a database.
+	 * 
+	 * @param auditRequest Details of the audit requested
+	 * @return A ResponseEntity with the status code of the request and the response if any
+	 * @throws URISyntaxException
+	 */
+	
 	@PostMapping("/ProjectExecutionStatus")
 	public ResponseEntity<AuditResponse> projectExecutionStatus(@RequestBody AuditRequest auditRequest)
 			throws URISyntaxException {
