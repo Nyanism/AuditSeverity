@@ -67,7 +67,7 @@ public class AuditSeverityController {
 
 		log.info("Request for project execution status received by AuditSeverity microservice");
 		
-		if(!tokenService.checkTokenValidity(token)) {
+		if(!tokenService.isTokenValid(token)) {
 			return new ResponseEntity<String>("Invalid token", HttpStatus.FORBIDDEN);
 		}
 		
@@ -109,18 +109,13 @@ public class AuditSeverityController {
 		AuditResponse auditResponse = new AuditResponse();
 		auditResponse.setAuditRequest(auditRequest);
 		log.info("Comparing number of no answers from AuditRequest against the number of benchmark no answers");
-		if (auditType.equalsIgnoreCase("internal")) {
-			if (numberOfAuditQuestionsWithNo <= benchmarkNoAnswers) {
-				auditResponse.setProjectExecutionStatus("GREEN");
-				auditResponse.setRemedialActionDuration("No action needed");
-			} else {
+		if (numberOfAuditQuestionsWithNo <= benchmarkNoAnswers) {
+			auditResponse.setProjectExecutionStatus("GREEN");
+			auditResponse.setRemedialActionDuration("No action needed");
+		} else {
+			if (auditType.equalsIgnoreCase("internal")) {
 				auditResponse.setProjectExecutionStatus("RED");
 				auditResponse.setRemedialActionDuration("Action to be taken in 2 weeks");
-			}
-		} else {
-			if (numberOfAuditQuestionsWithNo <= benchmarkNoAnswers) {
-				auditResponse.setProjectExecutionStatus("GREEN");
-				auditResponse.setRemedialActionDuration("No action needed");
 			} else {
 				auditResponse.setProjectExecutionStatus("RED");
 				auditResponse.setRemedialActionDuration("Action to be taken in 1 week");

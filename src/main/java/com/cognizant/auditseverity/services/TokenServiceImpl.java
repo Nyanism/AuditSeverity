@@ -12,7 +12,7 @@ public class TokenServiceImpl implements TokenService{
 	@Autowired
 	private AuthorizationFeign authorizationFeign;
 	
-	public boolean checkTokenValidity(String token) {
+	public boolean isTokenValid(String token) {
 		
 		AuthResponse authReponse = authorizationFeign.validity(token).getBody();
 		
